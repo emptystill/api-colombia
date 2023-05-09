@@ -8,19 +8,19 @@ pipeline {
   stages {   
     stage('Restore') {
       steps {
-        sh 'dotnetRestore api'
+        sh 'dotnet restore api'
       }
     }
     
     stage('Build') {
       steps {
-        sh 'dotnetBuild api'
+        sh 'dotnet build api'
       }
     }
     
     stage('Test') {
       steps {
-        sh 'dotnetTest api.test'
+        sh 'dotnet test api.test'
       }
     }
   }
