@@ -20,7 +20,7 @@ pipeline {
 
     stage('install-sonarscanner') {
       steps {
-        sh 'dotnet tool install dotnet-sonarscanner --add-source \"https://api.nuget.org/v3/index.json\" --ignore-failed-sources"
+        sh 'dotnet tool install dotnet-sonarscanner --add-source "https://api.nuget.org/v3/index.json" --ignore-failed-sources'
       }
         }
 
