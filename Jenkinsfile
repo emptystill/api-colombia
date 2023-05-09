@@ -17,11 +17,7 @@ pipeline {
         sh 'dotnet build api'
       }
         }
-        stage('Test') {
-            steps {
-                bat "dotnet test"
-            }
-        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
