@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   tools {
-    dotnet '7.0.5' // Utilizamos la última versión del SDK de .NET
+    dotnetsdk '7.0.5' // Utilizamos la última versión del SDK de .NET
   }
   
   stages {   
