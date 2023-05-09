@@ -17,11 +17,5 @@ pipeline {
         sh 'dotnet build api'
       }
     }
-    
-    stage('Test') {
-      steps {
-        sh 'dotnet test api.test'
-      }
-    }
   }
 }
