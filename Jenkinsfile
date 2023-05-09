@@ -18,6 +18,12 @@ pipeline {
       }
         }
 
+    stage('install-sonarscanner') {
+      steps {
+        sh 'dotnet tool install --global dotnet-sonarscanner'
+      }
+        }
+
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
