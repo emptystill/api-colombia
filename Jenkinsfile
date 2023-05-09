@@ -18,15 +18,13 @@ pipeline {
       }
     }
 
-    stage('SonarQube Analysis') {
+    stage('Análisis de código con SonarScanner') {
       steps {
-        script {
-          scannerHome = tool 'SonarScanner for MSBuild'
-          withSonarQubeEnv('SonarQube') {
-            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=sonar-jenkins -Dsonar.sources=api -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938"
-          }
+        withSonarQubeEnv('SonarQube') {
+          sh 'wget https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/5.2.1.31210/sonar-scanner-msbuild-5.2.1.31210-netcoreapp3.0.zip'
+          sh 'unzip sonar-scanner-msbuild-5.2.1.31210-netcoreapp3.0.zip'
+          sh './sonar-scanner-4.6.2.2472/bin/sonar-scanner -Dsonar.login="sqp_1a63050bfeaf1bca1a671691f1ff06eb8e2a5a2b" -Dsonar.projectKey="sonar-jenkins"'
         }
       }
     }
   }
-}
