@@ -17,16 +17,12 @@ pipeline {
         sh 'dotnet build api'
       }
         }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'dotnet tool install --global dotnet-sonarscanner'
-                    sh "dotnet sonarscanner begin /k:\"sonar-jenkins\" /d:sonar.host.url=\"http://localhost:9000\" /d:sonar.login=\"sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c\""
-                    sh "dotnet build"
-                    sh "dotnet sonarscanner end /d:sonar.login=\"sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c\""
-                }
-            }
-        }
+    stage('SonarQube Analysis') {
+      def scannerHome = tool 'SonarScanner for MSBuild'
+      withSonarQubeEnv() {
+        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"sonar-jenkins\""
+        sh "dotnet build"
+        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+    }
     }
 }
