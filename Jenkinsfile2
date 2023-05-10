@@ -23,7 +23,7 @@ pipeline {
                     script {
                         def scannerHome = tool 'dotnet-sonarscanner'
                         withEnv(["PATH+SONARSCANNER=${scannerHome}/bin:${env.PATH}"]) {
-                            sh 'dotnet sonarscanner begin /k:sonarscanner /d:sonar.host.url="http://locahost:9000" /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
+                            sh 'dotnet sonarscanner begin /k:sonarscanner /d:sonar.host.url="http://sonarqube:9000" /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
                             sh 'dotnet build'
                             sh 'dotnet sonarscanner end /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
                         }
