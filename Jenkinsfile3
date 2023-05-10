@@ -9,9 +9,12 @@ pipeline {
     }
 
     stage('Install dotnet') {
+      environment {
+        DOTNET_HOME = tool name: 'dotnet', type: 'io.jenkins.plugins.dotnet.DotNetSDK'
+      }
       steps {
         script {
-          tool name: 'dotnet', type: 'io.jenkins.plugins.dotnet.DotNetSDK'
+          sh 'dotnet --version'
         }
       }
     }
@@ -27,15 +30,11 @@ pipeline {
         sh 'dotnet test'
       }
     }
+  }
 
-    stage('SonarQube Analysis') {
-      steps {
-        withSonarQubeEnv('SonarQube') {
-          sh 'dotnet sonarscanner begin /k:"my-project" /d:sonar.host.url="http://localhost:9000" /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
-          sh 'dotnet build'
-          sh 'dotnet sonarscanner end /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
-        }
-      }
+  post {
+    always {
+      cleanWs()
     }
   }
 }
