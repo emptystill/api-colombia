@@ -1,31 +1,48 @@
 pipeline {
   agent any
 
-  tools {
-    dotnet 'dotnet' // Utilizamos el nombre de la herramienta 'dotnet' configurada en Jenkins
-  }
-
   stages {
-    stage('Restore') {
+    stage('Checkout') {
       steps {
-        sh 'dotnet restore api'
+        checkout scm
+      }
+    }
+
+    stage('Install dotnet') {
+      steps {
+        // Instala la herramienta dotnet en Jenkins
+        script {
+          def dotnetHome = tool 'dotnet'
+          env.PATH = "${dotnetHome}/bin:${env.PATH}"
+        }
       }
     }
 
     stage('Build') {
       steps {
-        sh 'dotnet build api'
+        // Ejecuta el comando de construcción del proyecto dotnet
+        sh 'dotnet build'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        // Ejecuta los comandos de prueba del proyecto dotnet
+        sh 'dotnet test'
       }
     }
 
     stage('SonarQube Analysis') {
       steps {
+        // Ejecuta el análisis de SonarQube
         withSonarQubeEnv('SonarQube') {
-          sh 'dotnet sonarscanner begin /k:"sonar-jenkins" /d:sonar.host.url="http://localhost:9000" /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
-          sh 'dotnet build api'
-          sh 'dotnet sonarscanner end /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
+          sh 'dotnet sonarscanner begin /k:sonar-jenkins /d:sonar.host.url=http://localhost:9000 /d:sonar.login=$SONAR_LOGIN'
+          sh 'dotnet build'
+          sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_LOGIN'
         }
       }
     }
+
+    // Resto de las etapas del pipeline...
   }
 }
