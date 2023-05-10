@@ -1,40 +1,35 @@
 pipeline {
-  agent any
+    agent any
 
-  stages {
-    stage('Checkout SCM') {
-      steps {
-        checkout scm
-      }
-    }
-
-    stage('Install dotnet') {
-      environment {
-        DOTNET_HOME = tool name: 'dotnet', type: 'io.jenkins.plugins.dotnet.DotNetSDK'
-      }
-      steps {
-        script {
-          sh 'dotnet --version'
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
         }
-      }
+
+        stage('Restore Packages') {
+            steps {
+                sh 'dotnet restore'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'dotnet build'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'dotnet test'
+            }
+        }
     }
 
-    stage('Build') {
-      steps {
-        sh 'dotnet build'
-      }
+    post {
+        always {
+            cleanWs()
+        }
     }
-
-    stage('Test') {
-      steps {
-        sh 'dotnet test'
-      }
-    }
-  }
-
-  post {
-    always {
-      cleanWs()
-    }
-  }
 }
