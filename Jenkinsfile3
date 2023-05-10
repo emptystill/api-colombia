@@ -1,35 +1,29 @@
 pipeline {
   agent any
-  
+
   tools {
-    dotnetsdk 'dotNet' // Utilizamos la última versión del SDK de .NET
+    dotnet 'dotnet' // Asegúrate de que 'dotnet' sea el nombre correcto del SDK de .NET instalado
   }
-  
-  stages {   
+
+  stages {
     stage('Restore') {
       steps {
-        script {
-          sh 'dotnet restore api'
-        }
+        sh 'dotnet restore api'
       }
     }
-    
+
     stage('Build') {
       steps {
-        script {
-          sh 'dotnet build api'
-        }
+        sh 'dotnet build api'
       }
     }
 
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          script {
-            sh "dotnet sonarscanner begin /k:\"sonar-jenkins\" /d:sonar.host.url=\"http://localhost:9000\" /d:sonar.login=\"sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c\""
-            sh "dotnet build"
-            sh "dotnet sonarscanner end /d:sonar.login=\"sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c\""
-          }
+          sh 'dotnet sonarscanner begin /k:"sonar-jenkins" /d:sonar.host.url="http://localhost:9000" /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
+          sh 'dotnet build'
+          sh 'dotnet sonarscanner end /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
         }
       }
     }
