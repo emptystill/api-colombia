@@ -1,41 +1,41 @@
 pipeline {
-    agent any
+  agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/emptystill/api-colombia.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                dir('api-colombia') {
-                    sh 'dotnet restore'
-                    sh 'dotnet build'
-                }
-            }
-        }
-
-        stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    script {
-                        def scannerHome = tool 'dotnet-sonarscanner'
-                        withEnv(["PATH+SONARSCANNER=${scannerHome}/bin:${env.PATH}"]) {
-                            sh 'dotnet sonarscanner begin /k:sonarscanner /d:sonar.host.url="http://sonarqube:9000" /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
-                            sh 'dotnet build'
-                            sh 'dotnet sonarscanner end /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                // Agrega los pasos para implementar tu aplicación aquí
-            }
-        }
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/emptystill/api-colombia.git'
+      }
     }
+
+    stage('Build') {
+      steps {
+        dir('api-colombia') {
+          sh 'dotnet restore'
+          sh 'dotnet build'
+        }
+      }
+    }
+
+    stage('SonarQube Analysis') {
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          script {
+            def scannerHome = tool 'dotnet-sonarscanner'
+            withEnv(["PATH+SONARSCANNER=${scannerHome}/bin:${env.PATH}"]) {
+              sh 'dotnet sonarscanner begin /k:sonarscanner /d:sonar.host.url="http://sonarqube:9000" /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
+              sh 'dotnet build'
+              sh 'dotnet sonarscanner end /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5'
+            }
+          }
+        }
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        // Agrega los pasos para implementar tu aplicación aquí
+      }
+    }
+  }
 }
