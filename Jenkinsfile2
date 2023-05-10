@@ -1,0 +1,201 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/emptystill/api-colombia.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('api-colombia') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    dotnet tool install --global dotnet-sonarscanner
+                    dotnet sonarscanner begin /k:"tu_proyecto_key" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="tu_token_de_autenticacion"
+
+                    dotnet build
+                    
+                    dotnet sonarscanner end /d:sonar.login="tu_token_de_autenticacion"
+                    '''
+                }pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/emptystill/api-colombia.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('api-colombia') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    dotnet tool install --global dotnet-sonarscanner
+                    dotnet sonarscanner begin /k:"tu_proyecto_key" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="tu_token_de_autenticacion"
+
+                    dotnet build
+                    
+                    dotnet sonarscanner end /d:sonar.login="tu_token_de_autenticacion"
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Agrega los pasos para implementar tu aplicación aquí
+            }
+        }pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/emptystill/api-colombia.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('api-colombia') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    dotnet tool install --global dotnet-sonarscanner
+                    dotnet sonarscanner begin /k:"tu_proyecto_key" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="tu_token_de_autenticacion"
+
+                    dotnet build
+                    
+                    dotnet sonarscanner end /d:sonar.login="tu_token_de_autenticacion"
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Agrega los pasos para implementar tu aplicación aquí
+            }
+        }
+    }pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/emptystill/api-colombia.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('api-colombia') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    dotnet tool install --global dotnet-sonarscanner
+                    dotnet sonarscanner begin /k:"tu_proyecto_key" /d:sonar.host.url="http://localhost:9000" /d:sonar.login="tu_token_de_autenticacion"
+
+                    dotnet build
+                    
+                    dotnet sonarscanner end /d:sonar.login="tu_token_de_autenticacion"
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Agrega los pasos para implementar tu aplicación aquí
+            }
+        }
+    }pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/emptystill/api-colombia.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('api-colombia') {
+                    sh 'dotnet restore'
+                    sh 'dotnet build'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    dotnet tool install --global dotnet-sonarscanner
+                    dotnet sonarscanner begin /k:sonarscannner /d:sonar.host.url="http://localhost:9000" /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5
+
+                    dotnet build
+                    
+                    dotnet sonarscanner end /d:sonar.login=sqp_37b4958452127516886e80e33eac56c9096726c5
+                    '''
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Agrega los pasos para implementar tu aplicación aquí
+            }
+        }
+    }
+}
+}
+}
+    }
+}
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Agrega los pasos para implementar tu aplicación aquí
+            }
+        }
+    }
+}
