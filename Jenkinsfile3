@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools {
-    dotnet 'dotnet' // Asegúrate de que 'dotnet' sea el nombre correcto del SDK de .NET instalado
+    dotnet 'dotnet' // Utilizamos el nombre de la herramienta 'dotnet' configurada en Jenkins
   }
 
   stages {
@@ -22,7 +22,7 @@ pipeline {
       steps {
         withSonarQubeEnv('SonarQube') {
           sh 'dotnet sonarscanner begin /k:"sonar-jenkins" /d:sonar.host.url="http://localhost:9000" /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
-          sh 'dotnet build'
+          sh 'dotnet build api'
           sh 'dotnet sonarscanner end /d:sonar.login=sqp_1151a2343674c3c831aeb5f07d1ec70499b0938c'
         }
       }
