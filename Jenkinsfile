@@ -1,4 +1,4 @@
-def projectName = "mi-proyecto"
+def projectName = "api"
 def scannerKey = "sqp_1a63050bfeaf1bca1a671691f1ff06eb8e2a5a2b"
 
 pipeline {
@@ -7,7 +7,7 @@ pipeline {
   tools {
     dotnetsdk 'dotNet'
     // Agregue una herramienta para SonarScanner
-    sonarqube 'SonarScanner for MSBuild'
+     'SonarScanner for MSBuild'
   }
 
   stages {
