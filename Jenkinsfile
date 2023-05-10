@@ -19,12 +19,10 @@ pipeline {
     }
 
     stage('Análisis de código con SonarScanner') {
-      steps {
-        def scannerHome = tool 'SonarScanner for MSBuild'
-        withSonarQubeEnv('SonarQube') {
-          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"sqp_1a63050bfeaf1bca1a671691f1ff06eb8e2a5a2b\""
-          sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"     
-        }
+      def scannerHome = tool 'SonarScanner for MSBuild'
+      withSonarQubeEnv('SonarQube') {
+        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:\"sqp_1a63050bfeaf1bca1a671691f1ff06eb8e2a5a2b\""
+        sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
       }
     }
   }
